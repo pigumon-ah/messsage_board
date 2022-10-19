@@ -1,7 +1,7 @@
 package controllers;
 
 import java.io.IOException;
-import java.util.List;
+import java.sql.Timestamp;
 
 import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
@@ -14,29 +14,44 @@ import models.Message;
 import utils.DBUtil;
 
 /**
- * Servlet implementation class IndexServlet
+ * Servlet implementation class NewServlet
  */
-@WebServlet("/index")
-public class IndexServlet extends HttpServlet {
+@WebServlet("/new")
+public class NewServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public IndexServlet() {
+    public NewServlet() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        EntityManager em = DBUtil.createEntityManager();
+        EntityManager em=DBUtil.createEntityManager();
+        em.getTransaction().begin();
 
-        List<Message> messages = em.createNamedQuery("getAllMessage", Message.class).getResultList();
-        response.getWriter().append(Integer.valueOf(messages.size()).toString());
+        Message m=new Message();
+
+        String title="taro";
+        m.setTitle(title);
+
+        String content="hello";
+        m.setContent(content);
+
+        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+        m.setCreated_at(currentTime);
+        m.setUpdated_at(currentTime);
+
+        em.persist(m);
+        em.getTransaction().commit();
+
+        response.getWriter().append(Integer.valueOf(m.getId()).toString());
 
         em.close();
     }
-
 }
