@@ -39,10 +39,10 @@ public class CreateServlet extends HttpServlet {
 
             Message m=new Message();
 
-            String title="taro";
+            String title=request.getParameter("title");
             m.setTitle(title);
 
-            String content="hello";
+            String content=request.getParameter("content");
             m.setContent(content);
 
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
@@ -51,11 +51,9 @@ public class CreateServlet extends HttpServlet {
 
             em.persist(m);
             em.getTransaction().commit();
-
-            response.getWriter().append(Integer.valueOf(m.getId()).toString());
-
             em.close();
-        }
-}
 
+            response.sendRedirect(request.getContextPath()+"/index");
+        }
+    }
 }
