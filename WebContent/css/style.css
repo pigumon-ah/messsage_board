@@ -17,6 +17,16 @@ body {
     padding-left: 3%;
 }
 
+#flush_success{
+    width: 100%;
+    padding-top: 28px;
+    padding-left: 2%;
+    padding-bottom: 28px;
+    margin-bottom: 15px;
+    color: #155724;
+    background-color: #d4edda;
+}
+
 h1 {
     width: 94%;
     padding-top: 17px;
